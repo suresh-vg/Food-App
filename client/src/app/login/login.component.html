@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="text-center">
+                    <h1>Food-App Login</h1>
+                      <app-alert [error]="error" *ngIf="error"></app-alert>
+                  </div>
+                <form #employee="ngForm" (ngSubmit)="doLogin(employee)">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" ngModel>
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input type="password" class="form-control" id="password" name="password" ngModel>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>

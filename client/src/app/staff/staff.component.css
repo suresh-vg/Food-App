@@ -1,0 +1,49 @@
+.number{
+    width: 50px;
+    height: 30px;
+    align-items: center;
+    border-style: none;
+    border-radius: 6px;;
+    background-color: rgb(196, 196, 196);
+    color: black;
+    font: 900;
+    text-align: center;
+    
+}
+
+.scroll
+    {
+        margin:5px;
+        padding:5px;
+        width: 100%;
+        height: 50%;
+        overflow: auto;
+        text-align:justify;
+    }
+    .scroll::-webkit-scrollbar{
+        width:0px;
+    }
+
+    .tableFixHead{
+
+        overflow: auto;
+
+         height: 400px;
+
+        }
+
+.tableFixHead th{
+
+    position: sticky;
+
+     top: 0;
+
+   }
+
+/* Just common table stuff. */
+
+table  { border-collapse: collapse; width: 100%; }
+
+th, td { padding: 8px 16px; }
+
+th     { background:#eee; }

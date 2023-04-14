@@ -1,0 +1,156 @@
+<div class="container" *ngIf="this.foodOrder.length < 1 ">
+    
+    <div class="row">
+        <div class="col-12">
+            No Food Orders Found
+        </div>
+    </div>
+    
+</div>
+
+<div class="container-fluid mb-5 mt-5" *ngIf="foodOrder.length > 0">
+
+    <div class="row">
+        <div class="col-3" >
+            <h3 class="display-4">
+                ORDER DETAILS
+            </h3>
+            <div class="ac-accordion">
+                <div class="ac-head  shadow p-3 mb-5 bg-white rounded">
+                    <div class="customerDetails text-center">
+                        <h5 class="display-5"> Total Orders </h5>
+                        <h5 class="display-5 text-muted  ">{{ totalCount }}  </h5>
+                    </div>
+                </div>
+                <div class="ac-head shadow p-3 mb-5 bg-white rounded">
+                    <div class="customerDetails text-center">
+                        <h5 class="display-5 "> PLACED </h5>
+                        <h5 class="display-5 text-muted">{{ placedCount }}  </h5>
+                    </div>
+                </div>
+                <div class="ac-head shadow p-3 mb-5 bg-white rounded">
+                    <div class="customerDetails text-center">
+                        <h5 class="display-5 "> COOKING </h5>
+                        <h5 class="display-5 text-muted">{{ cookingCount }}  </h5>
+                    </div>
+                </div>
+                <div class="ac-head shadow p-3 mb-5 bg-white rounded">
+                    <div class="customerDetails text-center">
+                        <h5 class="display-5 "> DELIVERED </h5>
+                        <h5 class="display-5 text-muted">{{ deliveredCount }}  </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 v1"></div>
+        <div class="col-8">
+            <h2 class="display-4">Food Orders</h2>
+            <div class="filter-buttons mb-5 mt-5">
+                <button class="btn mx-2 btn-outline-info " (click)="status('')">All Orders</button>
+                <button class="btn mx-2 btn-outline-danger" (click)="status('PLACED')">Placed</button>
+                <button class="btn mx-2 btn-outline-warning" (click)="status('COOKING')">Cooking</button>
+                <button class="btn mx-2 btn-outline-success" (click)="status('DELIVERED')">Delivered</button>
+            </div>
+            <div class="ac-accordion scroll">
+                <div *ngFor="let data of foodOrder | status:_status ;let i = index ">
+                    <div class="ac-head d-flex flex-row justify-content-between shadow p-3 mb-5 bg-white rounded" [ngClass]="{ 'active':view_tab === 'ac_'+i}"
+                        (click)="changeTab('ac_'+i)"  >
+                        <div class="customerDetails">
+                            <h6 class="display-6"> {{ data.customerName}} </h6>
+                            <h6 class="display-6 text-muted"> {{ data.contactNumber}} </h6>
+                        </div>
+                        <div class="d-flex flex-row justify-content-around">
+                            <div *ngIf="data.isVeg" class="mx-2">
+                                <span class="badge badge-pill badge-success"> VEG </span>
+                            </div>
+                            <div *ngIf="data.isNonVeg" class="mx-2">
+                                <span class="badge badge-pill badge-danger"> NON-VEG </span>
+                            </div>
+                        </div>
+                        <div class="orderDetails">
+                            <h6 class="display-6">Order Time : {{ data.orderCreatedTime}} </h6>
+                            <h6 class="display-6"> Bill : {{ data.totalPrice}} </h6>
+                        </div>
+                    </div>
+                    <div *ngIf="view_tab == 'ac_'+i && view_tab != ''"   class="ac-content">
+                        <div class="card-body">
+                            <h3>Items Order</h3>
+        
+                            <div class="row ">
+                                <div class="col-8">
+        
+                                    <table class="table " width="12%">
+                                        <thead class=" thead-dark ">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Item</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+        
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align: centre;">
+                                            <tr *ngFor="let r of data.item; let j = index">
+                                                <td>
+                                                    <h6 class="display-5">{{i+1}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="display-5">{{ r.name }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="display-5">{{ r.price}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="display-5">{{ r.quantity }}</h6>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="card-body">
+                                        <h4 class="card-title">SubTotal : {{ data.totalPrice }}</h4>
+        
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex flex-column justify-content-center align-content-center">
+                                        <ul style="list-style: none;" class="">
+                                            <h3>Order Status</h3>
+        
+                                            <li>
+                                                <h4 class="display-5">
+                                                    <span class="dot1" style="background-color: #5BB318;"></span> Order placed
+                                                </h4>
+                                            </li>
+                                            <li>
+                                                <h4 class="display-5" >
+                                                    <span class="dot1"
+                                                        [ngStyle]="{backgroundColor: (data.status === 'COOKING' || data.status === 'DELIVERED')?'#5BB318':'grey'}"></span>
+                                                    Cooking
+                                                </h4>
+                                            </li>
+        
+                                            <li>
+                                                <h4 class="display-5">
+                                                    <span class="dot1"
+                                                        [ngStyle]="{backgroundColor: (data.status === 'DELIVERED')?'#5BB318':'grey'}"></span>
+                                                    Delivered 
+                                                </h4>
+                                            </li>
+                                        </ul>
+                                        
+                                        <button type="submit" class="btn btn-outline-success" (click)="update(data.id)"  *ngIf="data.status !== 'COOKING' && data.status !== 'DELIVERED'">
+                                            Update
+                                        </button>
+                                        <button type="submit" class="btn btn-outline-danger" (click)="generateBill(data.id)" *ngIf="data.status === 'COOKING'">
+                                                Checkout
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

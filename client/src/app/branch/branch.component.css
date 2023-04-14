@@ -1,0 +1,49 @@
+body {
+    background-color: hsl(0, 0%, 94%)
+  }
+
+.scroll
+    {
+        margin:5px;
+        padding:5px;
+        height: 400px;
+        overflow: auto;
+        text-align:justify;
+   
+    }
+
+    .scroll::-webkit-scrollbar{
+        width:0px;
+    }
+    .form1{
+        margin-right: 250px;
+      
+      
+       
+    }
+   
+   
+    
+    .tableFixHead{
+         overflow: auto;
+          height: 400px;
+         }
+.tableFixHead th{
+     position: sticky;
+      top: 0; 
+    }
+
+.css1{
+    margin-right: 30px;
+    margin-top: 42px;
+   
+    width: 561px;
+    font-weight:200;
+    border-radius: 10px;
+    background-repeat:repeat-y;
+    
+   
+}
+.button2{
+    padding:10px;
+}

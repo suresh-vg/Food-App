@@ -1,0 +1,226 @@
+<div class="container-fluid mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-3">
+      <div class="card text-center shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders</h5>
+          <h6 class="card-text text-muted">200+</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card text-center shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Total Products</h5>
+          <h6 class="card-text text-muted">50+</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card text-center shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Total Catogories</h5>
+          <h6 class="card-text text-muted">10+</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card text-center shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Total Staff</h5>
+          <h6 class="card-text text-muted">10+</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="display-4 text-center">Product Details</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModalCenter">
+  ADD New Product
+</button>
+      <div class="shadow p-2 mb-3 bg-white rounded  bg-white rounded">
+        <div class="row d-flex flex-row justify-content-between align-content-between">
+          <div class="col-4 ">
+            <select id="types" class="form-control" [(ngModel)]="_type">
+              <option value="">Search By catogery</option>
+               <option *ngFor="let type of types; " value="{{ type }}">{{ type }}</option>
+             </select>
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" id="Search" placeholder="Search  Item..." [(ngModel)]="pattern">
+          </div>
+        </div>
+      </div>
+      <div class="shadow p-3 mb-5 bg-white rounded scroll">
+        <table class="table  align-middle mb-0 bg-white ">
+          <thead class="thead-dark rounded">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>About</th>
+              <th>Price</th>
+              <th>Availability</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr *ngFor="let item of foodProduct  | filterByType:_type | filterBYName : pattern; let i = index;">
+              <td>{{i+1}}</td>
+              <td>
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ item.name}}</p>
+                </div>
+              </td>
+              <td>
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ item.about}}</p>
+                </div>
+              </td>
+              <td>
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ item.price}}</p>
+                </div>
+              </td>
+              <td>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" name="{{i}}" [checked]="item.availability" (click)="changeStatus(item.id)">
+                  <label class="custom-control-label" for="customSwitch{{i}}"></label>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded"  [routerLink]="['/edit/',_menuId,item.id]" >
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded" (click)="deleteFoodProduct(item.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
+    </div>
+    <div class="col-8">
+      <h3 class="display-4 text-center">Staff Deatils</h3>
+      <div class="shadow p-3 mb-5 bg-white rounded scroll">
+        <table class="table  align-middle mb-0 bg-white ">
+          <thead class="thead-dark rounded">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>STATUS</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr *ngFor="let staff of staffs;let i = index;">
+              <td>{{staff.id}}</td>
+              <td>
+                <div class="ms-3">
+                  <h6 class="fw-bold mb-1">{{ staff.name}}</h6>
+                  <h6 class="text-muted">{{ staff.email}}</h6>
+                </div>
+              </td>
+              <td>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitchUser{{i}}" name="User{{i}}" [checked]="staff.active" (click)="changeStaffStatus(staff.id)">
+                  <label class="custom-control-label" for="customSwitchUser{{i}}"></label>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-4 d-flex flex-column justify-content-start align-content-center border border-light">
+      <h3 class="display-4">Current orders</h3>
+      <div class="ac-accordion float-right  scroll">
+        <div *ngFor="let order of foodOrders | status:'DASHBOARD'">
+            <div class="ac-head d-flex flex-row justify-content-between shadow p-3 mb-5 bg-white rounded">
+                <div class="customerDetails">
+                    <h6 class="display-6">  Order Id {{ order.id}}</h6>
+                    <h6 class="display-6 text-muted"> Staff ID {{ order.user_id}}</h6>
+                </div>
+                <div class="orderDetails">
+                    <h6 class="display-6"> Order Status {{ order.status}}</h6>
+                    <h6 class="display-6"> Order Bill {{ order.totalPrice}}</h6>
+                </div>
+            </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <app-alert [error]="error"></app-alert>
+          <form #foodProducts="ngForm" (ngSubmit)="addFoodProduct(foodProducts)">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="inputPassword4">Name</label>
+                <input type="text" class="form-control" placeholder="Enter Food Product Name" id="foodProductName"
+                  name="name" ngModel />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputAddress">About</label>
+              <input type="text" class="form-control" placeholder="about Of product" id="foodProductabout" name="about"
+                ngModel />
+              <input type="hidden" class="form-control" id="foodProductavailability" name="availability" value="true"
+                ngModel />
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">Price</label>
+                <input type="text" class="form-control" placeholder="Set Price" id="foodProductPrice" name="price"
+                  ngModel />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputZip">Type</label>
+                <select type="text" class="form-control" placeholder="Set Type" id="foodProductType" name="type" ngModel>
+                 <option *ngFor="let type of types; " value="{{ type }}">{{ type }}</option>
+                </select>
+    
+                <input type="text" class="form-control mt-2" name="type" placeholder="Enter New Type" ngModel>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="button2">
+              <!-- <button type="button" class="btn btn-secondary" >Add More</button> -->
+              <button type="submit" class="btn btn-primary" >
+                Add product
+              </button>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
